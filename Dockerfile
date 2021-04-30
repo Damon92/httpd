@@ -24,6 +24,7 @@ RUN cp /root/httpd/smokeping /etc/init.d/
 RUN cp -rf /root/httpd/basepage.html.dist /usr/local/smokeping/etc/
 RUN cp -rf /root/httpd/location/* /usr/local/smokeping/etc/location
 RUN cp -rf /root/httpd/config /usr/local/smokeping/etc/
+RUN cp -rf /root/httpd/smokeping-screen.css /usr/local/smokeping/htdocs/css
 RUN cd /usr/local/smokeping/ && ln -s htdocs/smokeping.fcgi smokeping.fcgi
 RUN chmod 755 /etc/init.d/smokeping
 RUN mv /etc/localtime /etc/localtime.bak
