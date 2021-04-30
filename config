@@ -128,9 +128,9 @@ title = IDC网络节点质量监控
 remark = Smokeping 网络质量监控系统
 
 
-@include /usr/local/smokeping/etc/location/telcom
-@include /usr/local/smokeping/etc/location/unicom
-@include /usr/local/smokeping/etc/location/cmcc
+#@include /usr/local/smokeping/etc/location/telcom
+#@include /usr/local/smokeping/etc/location/unicom
+#@include /usr/local/smokeping/etc/location/cmcc
 @include /usr/local/smokeping/etc/location/wy
 @include /usr/local/smokeping/etc/location/ct/HBDQ-CT
 @include /usr/local/smokeping/etc/location/ct/DBDQ-CT
