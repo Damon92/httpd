@@ -1,5 +1,7 @@
 From centos:7.4.1708
+#FROM rockylinux/rockylinux:8.9
 MAINTAINER Damon.Dai daikaiguo@rayvision.com
+RUN (cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup && rm -f /etc/yum.repos.d/CentOS-Base.repo && curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo && yum clean all)
 RUN yum -y install epel-release
 RUN (yum install sendmail.x86_64 git python-requests crontabs wget fping httpd gcc make python-pip python-rrdtool rrdtool perl-rrdtool openssl openssl-devel -y ;\
      yum install perl-Sys-Syslog perl-Module-CoreList perl-ExtUtils-Manifest \
@@ -9,9 +11,10 @@ RUN (yum install sendmail.x86_64 git python-requests crontabs wget fping httpd g
                  perl-Test-Deep perl-Test-Warn perl-CPAN-Meta perl-Module-Build \
                  perl-Test-RequiresInternet perl-URI lrzsz -y)
 #RUN wget https://oss.oetiker.ch/smokeping/pub/smokeping-2.6.11.tar.gz
-RUN wget https://oss.oetiker.ch/smokeping/pub/smokeping-2.7.1.tar.gz
-RUN tar -zxvf smokeping-2.7.1.tar.gz
-RUN cd smokeping-2.7.1 && ./configure --prefix=/usr/local/smokeping && make && make install
+#RUN wget https://oss.oetiker.ch/smokeping/pub/smokeping-2.7.1.tar.gz
+RUN wget https://oss.oetiker.ch/smokeping/pub/smokeping-2.8.2.tar.gz
+RUN tar -zxvf smokeping-2.8.2.tar.gz
+RUN cd smokeping-2.8.2 && ./configure --prefix=/usr/local/smokeping && make && make install
 RUN cd /usr/local/smokeping && mkdir -p data cache var && mkdir etc/location
 RUN cp /usr/local/smokeping/htdocs/smokeping.fcgi.dist /usr/local/smokeping/htdocs/smokeping.fcgi
 RUN chown apache:apache -R /usr/local/smokeping
@@ -24,8 +27,10 @@ RUN cp /root/httpd/smokeping /etc/init.d/
 RUN cp -rf /root/httpd/basepage.html.dist /usr/local/smokeping/etc/
 RUN cp -rf /root/httpd/location/* /usr/local/smokeping/etc/location
 RUN cp -rf /root/httpd/config /usr/local/smokeping/etc/
+RUN cp -rf /root/httpd/smokepingpwd /etc/httpd/
 RUN cp -rf /root/httpd/smokeping-screen.css /usr/local/smokeping/htdocs/css
 RUN cd /usr/local/smokeping/ && ln -s htdocs/smokeping.fcgi smokeping.fcgi
 RUN chmod 755 /etc/init.d/smokeping
+RUN systemctl enable httpd
 RUN mv /etc/localtime /etc/localtime.bak
 RUN cp -rf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
